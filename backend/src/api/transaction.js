@@ -34,7 +34,7 @@ transaction.post("/send", transactionMiddleware, async (req, res) => {
     const transactionDetail = await Transactions.create([{sender, receiver, amount}]);
     await session.commitTransaction();
     await session.endSession();
-    return res.status(200).json({ message: `Transaction Successful txs id: ${transactionDetail[0].id}`});
+    return res.status(200).json({ message: `Transaction Successful`, trxId: transactionDetail[0].id});
   } catch (err) {
     await session.abortTransaction();
     await session.endSession();
