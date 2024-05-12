@@ -6,6 +6,7 @@ import register from './api/register.js';
 import transaction from './api/transaction.js';
 import users from './api/users.js';
 import tokenVerify from './api/middleware/auth.js';
+import verifyToken from './api/verify.js';
 
 const externalPort = parseInt(EnvConfig.get('EXTERNAL_PORT'), 10);
 const externalServer = async () => {
@@ -15,6 +16,7 @@ const externalServer = async () => {
   server.use('/login', login);
   server.use('/register', register);
   server.use(tokenVerify);
+  server.use('/verify', verifyToken);
   server.use('/transaction', transaction);
   server.use('/users', users);
   server.listen(externalPort, () => console.log('listening on port ' + externalPort));
