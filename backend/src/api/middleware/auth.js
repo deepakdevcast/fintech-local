@@ -10,7 +10,8 @@ const tokenVerify = (req, res, next) => {
     const token = authorization.split(" ")[1];
     const decoded = jwt.verify(token, EnvConfig.get('JWT_SECRET'));
     req.user = {
-      email: decoded.email
+      email: decoded.email,
+      id: decoded.id
     };
     next();
   } catch (err) {
