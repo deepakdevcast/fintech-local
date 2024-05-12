@@ -5,7 +5,8 @@ import transactionMiddleware from "./middleware/transaction.js";
 const transaction = Router(); 
 
 transaction.post("/send", transactionMiddleware, async (req, res) => {
-  const { sender, receiver, amount } = req.body;
+  const { receiver, amount } = req.body;
+  const sender = req.user.id;
   try {
     const senderAccount = (await Users.findById(sender));
   const receiverAccount = (await Users.findById(receiver));
