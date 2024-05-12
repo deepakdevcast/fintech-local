@@ -5,11 +5,14 @@ import SignIn from "./pages/SignIn";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import SendMoney from "./pages/SendMoney";
+import AuthProvider from "./components/AuthToken";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />
+    element: <AuthProvider>
+        <Home />
+      </AuthProvider>
   },
   {
     path: "/signup",
@@ -21,7 +24,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: <AuthProvider><Dashboard /></AuthProvider>,
     errorElement: <div className="h-screen flex flex-col justify-center items-center">
       <h1 className="text-2xl">Unauthorized! Please SignIn/SignUp!</h1>
       <div>

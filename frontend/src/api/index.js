@@ -2,10 +2,25 @@
 class EnvConfig {
   static backendUrl = 'http://localhost:8000';
 }
-export const getCheckToken = () =>{
+export const getCheckToken = () => {
   const token = localStorage.getItem('token');
-  if (!token) throw new Error('Token missing');
-  return token;
+  if (!token) return { isToken: false, token: null };
+  return {isToken: true, token};
+}
+
+export const verifyToken = async () => {
+  const token = getCheckToken();
+  if (token.isToken){
+    const response = await fetch(`${EnvConfig.backendUrl}/verify`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token.token}`
+      }
+    });
+    if (response.status >= 200 && response.status < 300) return true;
+  }
+  return false;
 }
 
 export const backendSignUpCall = async (name, email, password) => {
@@ -48,7 +63,7 @@ export const backendGetBalanceCall = async () => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${getCheckToken()}`
+      'Authorization': `Bearer ${getCheckToken().token}`
     }
   });
   const data = await response.json();
@@ -62,7 +77,7 @@ export const backendUserAllCall = async () => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${getCheckToken()}`
+      'Authorization': `Bearer ${getCheckToken().token}`
     }
   });
   console.log(response.status);
@@ -76,7 +91,7 @@ export const backendFindUserCall = async (name) => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${getCheckToken()}`
+      'Authorization': `Bearer ${getCheckToken().token}`
     }
   });
   console.log(response.status);
@@ -90,7 +105,7 @@ export const backendSendMoneyCall = async (receiver, amount) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${getCheckToken()}`
+      'Authorization': `Bearer ${getCheckToken().token}`
     },
     body: JSON.stringify({
       receiver: receiver.toString(),

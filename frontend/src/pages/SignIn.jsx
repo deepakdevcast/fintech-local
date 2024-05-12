@@ -1,12 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form, Link, useNavigate } from 'react-router-dom'
 import InputBox from '../components/InputBox';
 import HeadText from '../components/HeadText';
-import { backendSignInCall } from '../api';
+import { backendSignInCall, verifyToken } from '../api';
 
 function SignIn() {
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
+  useEffect(() => {
+    verifyToken().then(isSignIn => isSignIn ? navigate('/', { replace: true }) : null);
+  }, [])
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
