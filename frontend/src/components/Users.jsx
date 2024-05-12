@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import UserIcon from "./UserIcon";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { backendFindUserCall, backendUserAllCall } from "../api";
+import { useDebouncing } from "../hooks/debouncing";
 
 function Users() {
   const [searchText, setSearchText] = useState('');
@@ -18,10 +19,11 @@ function Users() {
     })
   }
 
+  const debounceValue = useDebouncing(searchText, 600)
   useEffect(() =>{
     if(searchText !='') backendFindUserCall(searchText).then(data => setUserList(data));
     else backendUserAllCall().then(data => setUserList(data));
-  }, [searchText])
+    }, [debounceValue])
 
   return (
     <>
