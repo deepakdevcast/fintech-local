@@ -35,7 +35,6 @@ export const backendSignUpCall = async (name, email, password) => {
       password
     })
   });
-  console.log(response.status);
   const data = await response.json();
   if (response.status >= 200 && response.status < 300) return data;
   throw new Error(data.message ? data.message : 'Request failed');
@@ -52,14 +51,13 @@ export const backendSignInCall = async (email, password) => {
       password
     })
   });
-  console.log(response.status);
   const data = await response.json();
   if (response.status >= 200 && response.status < 300) return data;
   throw new Error(data.message ? data.message : 'Request failed');
 }
 
 export const backendGetBalanceCall = async () => {
-  const response = await fetch(`${EnvConfig.backendUrl}/users/details`, {
+  const response = await fetch(`${EnvConfig.backendUrl}/accounts`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -73,14 +71,13 @@ export const backendGetBalanceCall = async () => {
 }
 
 export const backendUserAllCall = async () => {
-  const response = await fetch(`${EnvConfig.backendUrl}/users/find`, {
+  const response = await fetch(`${EnvConfig.backendUrl}/users`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${getCheckToken().token}`
     }
   });
-  console.log(response.status);
   const data = await response.json();
   if (response.status >= 200 && response.status < 300) return data;
   throw new Error(data.message ? data.message : 'Request failed');
@@ -94,7 +91,6 @@ export const backendFindUserCall = async (name) => {
       'Authorization': `Bearer ${getCheckToken().token}`
     }
   });
-  console.log(response.status);
   const data = await response.json();
   if (response.status >= 200 && response.status < 300) return data;
   throw new Error(data.message ? data.message : 'Request failed');
@@ -108,11 +104,10 @@ export const backendSendMoneyCall = async (receiver, amount) => {
       'Authorization': `Bearer ${getCheckToken().token}`
     },
     body: JSON.stringify({
-      receiver: receiver.toString(),
+      receiver_id: receiver.toString(),
       amount: parseInt(amount, 10)
     })
   });
-  console.log(response.status);
   const data = await response.json();
   if (response.status >= 200 && response.status < 300) return data;
   throw new Error(data.message ? data.message : 'Request failed');

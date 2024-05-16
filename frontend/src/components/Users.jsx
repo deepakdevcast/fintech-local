@@ -8,11 +8,11 @@ function Users() {
   const [searchText, setSearchText] = useState('');
   const [userList, setUserList] = useState([]);
   const navigate = useNavigate();
-  const userMoneyTransfer = ({_id, name, email}) => {
+  const userMoneyTransfer = ({id, name, email}) => {
 
     navigate('/transfer', {
       state: {
-        receiverId: _id,
+        receiverId: id,
         receiverName: name,
         receiverEmail: email
       }
@@ -42,7 +42,7 @@ function Users() {
       </div>
       <div className="pt-4">
         {userList.map(user => 
-        <div key={user._id} className="pb-2 flex justify-between items-center">
+        <div key={user.id} className="pb-2 flex justify-between items-center">
           <div className="flex">
             <UserIcon text={user.name.charAt(0)}/>
             <span className="font-semibold pl-2 flex items-center">{user.name}</span>

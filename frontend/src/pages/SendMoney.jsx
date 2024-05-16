@@ -15,7 +15,6 @@ function SendMoney() {
     if (amount < 1) return;
     const data = await backendSendMoneyCall(receiverId, amount);
     setIsSend(true);
-    console.log(data);
     setTransactionId(data.trxId);
   };
   return (
