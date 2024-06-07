@@ -1,4 +1,8 @@
-process.loadEnvFile();
+try {
+  process.loadEnvFile();
+}catch(e) {
+  console.log('.env file not loaded');
+}
 
 class EnvConfig {
   static get(key) {

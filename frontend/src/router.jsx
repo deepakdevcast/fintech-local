@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import {  Link, RouterProvider, createBrowserRouter } from "react-router-dom";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
