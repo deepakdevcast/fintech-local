@@ -7,7 +7,6 @@ function AuthProvider({children}) {
   const navigate = useNavigate();
   useEffect(() => {
     verifyToken().then((isSign) => {
-      console.log('Auth token verified', isSign);
       if (!isSign) {
         navigate('/signin', {replace: true});
       }

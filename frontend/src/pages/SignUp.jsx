@@ -14,7 +14,6 @@ function SignUp() {
     e.preventDefault()
     const data = new FormData(e.target);
     const {username, email, password, cPassword} = Object.fromEntries(data);
-    console.log({username, email, password, cPassword});
     if (password!== cPassword) {
       setErrorMessage('Passwords do not match!');
       return;

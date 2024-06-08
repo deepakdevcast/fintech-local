@@ -1,0 +1,45 @@
+name: fintech-local
+services:
+  frontend:
+    image: fintech-frontend
+    container_name: fintech-frontend
+    build: ./frontend
+    ports:
+      - "4173:4173"
+    networks:
+      - network_backend
+    depends_on:
+      - backend
+
+  backend:
+    image: fintech-backend
+    container_name: fintech-backend
+    env_file: ./backend/.env
+    build: ./backend
+    ports:
+      - "8000:8000"
+    networks:
+      - network_db
+      - network_backend
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16.3-alpine3.20
+    container_name: postgres
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - network_db
+
+networks:
+  network_db: {}
+  network_backend: {}
+
+volumes:
+  postgres_data: {}

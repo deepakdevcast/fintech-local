@@ -14,7 +14,6 @@ function SignIn() {
     e.preventDefault();
     const data = new FormData(e.target);
     const {email, password} = Object.fromEntries(data);
-    console.log({email, password});
     try {
     const resData = await backendSignInCall(email, password);
     if (resData.token) {

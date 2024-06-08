@@ -12,7 +12,7 @@ export const registerBodySchema = z.object({
 })
 
 export const transactionBodySchema = z.object({
-  receiver: z.string(),
-  sender: z.string(),
+  receiver_id: z.string(),
+  sender_id: z.string(),
   amount: z.number().min(1),
 })
